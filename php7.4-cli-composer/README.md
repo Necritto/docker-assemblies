@@ -2,9 +2,10 @@
 
 ## To start the build you need:
 - Create executable php file in app folder
+- Remove the postfix .example from the .env file and add your settings to it
 - Start server with command 
   ```sh
-   docker compose up -d
+    docker compose up -d
   ```
 
 ### Launch
