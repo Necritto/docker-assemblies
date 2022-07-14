@@ -9,5 +9,5 @@ services:
     working_dir: ${APP_ROOT}
     user: '1000:1000'
     ports:
-      - 8000:8000
-    command: php -S 0.0.0.0:8000 -t ${APP_ROOT}
+      - ${SERVER_PORT}:${SERVER_PORT}
+    command: php -S 0.0.0.0:${SERVER_PORT} -t ${APP_ROOT}
