@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.8'
 
 services:
   php:
@@ -11,3 +11,17 @@ services:
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
     command: php -S 0.0.0.0:${SERVER_PORT} -t ${APP_ROOT}
+  mysql:
+    image: mysql:8.0.29
+    restart: unless-stopped
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - db:/var/lib/mysql
+    ports:
+      - ${MYSQL_PORT}:${MYSQL_PORT}
+volumes:
+  db:
