@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx
+    restart: unless-stopped
+    ports:
+      - ${NGINX_PORT}:80
+      - ${NGINX_PORT_SECURE}:443
+    volumes:
+      - './nginx/conf:/etc/nginx/conf.d'
+      - './nginx/log:/var/log/nginx'
+      - './php:/var/www/html'
+
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - './mysql/data:/var/lib/mysql'
+    ports:
+      - ${MYSQL_PORT}:${MYSQL_PORT}
+
+  phpfpm:
+    build:
+      context: ./php
+    user: '1000:1000'
+    restart: unless-stopped
+    volumes:
+      - './php:/var/www/html'
+    depends_on:
+      - mysql
